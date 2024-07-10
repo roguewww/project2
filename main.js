@@ -16,7 +16,7 @@ import { distantView } from "./distantView.js";
 let scene, camera, renderer, composer, model, controls, raycaster, mouse;
 const objects = [];
 let lastCameraPosition = new THREE.Vector3();
-
+const loadingDiv = document.getElementById("loading");
 init();
 animate();
 
@@ -46,8 +46,9 @@ function init() {
     0.1,
     2000
   );
-  const targetLookAt2 = new THREE.Vector3(0.713, 10.533, -28.893);
-  camera.position.set(0.04, 15.03, 10.47);
+  
+  camera.position.set(0, 10, 65);
+  const targetLookAt2 = new THREE.Vector3(0, 15, -30);
   // camera.rotation.set(0, 12.54, 0);
   camera.lookAt(targetLookAt2);
   lastCameraPosition.copy(camera.position);
@@ -79,7 +80,7 @@ function init() {
         }
       });
       scene.add(model);
-      // loadingDiv.style.display = "none";
+      loadingDiv.style.display = "none";
     },
     function (xhr) {
       console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
