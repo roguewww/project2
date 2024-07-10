@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
@@ -8,6 +9,9 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 import { GammaCorrectionShader } from "three/examples/jsm/shaders/GammaCorrectionShader.js";
 import { gsap } from "gsap";
+import { closeView } from "./closeView.js";
+import { middleView } from "./middleView.js";
+import { distantView } from "./distantView.js";
 
 let scene, camera, renderer, composer, model, controls, raycaster, mouse;
 const objects = [];
@@ -42,35 +46,43 @@ function init() {
     0.1,
     2000
   );
-  camera.position.set(0.04, 9.03, 64.47);
-  camera.rotation.set(0, 12.54, 0);
+  const targetLookAt2 = new THREE.Vector3(0.713, 10.533, -28.893);
+  camera.position.set(0.04, 15.03, 10.47);
+  // camera.rotation.set(0, 12.54, 0);
+  camera.lookAt(targetLookAt2);
   lastCameraPosition.copy(camera.position);
 
   // Raycaster
   raycaster = new THREE.Raycaster();
   mouse = new THREE.Vector2();
 
+  const dracoLoader = new DRACOLoader();
+  dracoLoader.setDecoderPath(
+    "https://www.gstatic.com/draco/versioned/decoders/1.4.1/"
+  ); // 设置 Draco 解码器路径
+
   // Load GLB model
   const loader = new GLTFLoader();
+  loader.setDRACOLoader(dracoLoader);
   loader.load(
     "scene.glb",
     function (gltf) {
       model = gltf.scene;
       model.traverse((child) => {
         if (child.isMesh) {
-          console.log(child.name); // 输出模型名称到控制台
+          console.log(child); // 输出模型名称到控制台
           child.castShadow = true;
           child.receiveShadow = true;
           objects.push(child); // Add mesh to objects array
 
-          if (child.material) {
-            child.material.roughness = 0.1;
-            child.material.metalness = 0.1;
-            child.material.emissiveIntensity = 0.5; // 根据需要调整
-          }
+          // =
         }
       });
       scene.add(model);
+      // loadingDiv.style.display = "none";
+    },
+    function (xhr) {
+      console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
     },
     undefined,
     function (error) {
@@ -88,7 +100,9 @@ function init() {
   // Unreal Bloom pass
   const bloomPass = new UnrealBloomPass(
     new THREE.Vector2(window.innerWidth, window.innerHeight),
-    0.2, 0.4, 0.85
+    0.2,
+    0.4,
+    0.85
   );
   bloomPass.threshold = 0;
   bloomPass.strength = 0.2;
@@ -115,8 +129,16 @@ function init() {
   window.addEventListener("click", onMouseClick, false);
 
   // Move camera on button click
-  const moveButton = document.getElementById("move-button");
-  moveButton.addEventListener("click", onMoveButtonClick);
+
+  document
+    .getElementById("camera1-button")
+    .addEventListener("click", () => distantView(camera));
+  document
+    .getElementById("camera2-button")
+    .addEventListener("click", () => middleView(camera));
+  document
+    .getElementById("camera3-button")
+    .addEventListener("click", () => closeView(camera));
 }
 
 function onWindowResize() {
@@ -142,6 +164,18 @@ function onMouseClick(event) {
     const intersectedObject = intersects[0].object;
     console.log(intersectedObject.name); // 输出被点击对象的名称
     // Check if the clicked object is the specific model
+    if (intersectedObject.name === "SM_Statue_RaijinAmo_Baked") {
+      // alert("clicked");
+      // closeView(camera);
+    }
+    if (intersectedObject.name === "SM_Statue_FujinAmo_Baked") {
+      // alert("clicked");
+      // middleView(camera);
+    }
+    if (intersectedObject.name === "立方体002_Baked") {
+      // alert("clicked");
+      //  distantView(camera);
+    }
   }
 }
 
@@ -151,12 +185,12 @@ function onMoveButtonClick() {
     x: 0.04, // 设置新的x位置
     y: 9.03, // 设置新的y位置
     z: 30, // 设置新的z位置
-    onUpdate: function() {
+    onUpdate: function () {
       // camera.lookAt(scene.position);
     },
-    onComplete: function() {
+    onComplete: function () {
       lastCameraPosition.copy(camera.position);
-    }
+    },
   });
 }
 

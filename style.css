@@ -16,10 +16,11 @@ canvas {
   position: absolute;
   top: 0px;
   left: 0px;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0);
   padding: 10px;
   border-radius: 5px;
   z-index:3;
+  color:white;
 }
 .camera-info {
   margin-top: 10px;

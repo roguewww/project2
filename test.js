@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
@@ -10,6 +11,8 @@ import { GammaCorrectionShader } from 'three/examples/jsm/shaders/GammaCorrectio
 
 let scene, camera, renderer, composer, model, raycaster, mouse;
 const objects = [];
+const lookAtTarget = new THREE.Vector3(0, 10, -29.870);
+
 
 init();
 animate();
@@ -38,17 +41,24 @@ function init() {
   container.appendChild(renderer.domElement);
 
   // Camera
+  // const lookAtTarget = new THREE.Vector3(0.555, 10, -29.870);
   camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 2000);
-  camera.position.set(0.04, 9.03, 11.47);
-  camera.rotation.set(0, 12.54, 0);
+  camera.position.set(0, 10, 11.47);
+  camera.rotation.set(0, 0, 0);
+  camera.lookAt(lookAtTarget);
 
   // Raycaster
   raycaster = new THREE.Raycaster();
   mouse = new THREE.Vector2();
 
+  const dracoLoader = new DRACOLoader();
+  dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.4.1/'); // 设置 Draco 解码器路径
+
+
   // Load GLB model
   const loader = new GLTFLoader();
-  loader.load('test.glb', function(gltf) {
+  loader.setDRACOLoader(dracoLoader);
+  loader.load('scene.glb', function(gltf) {
     model = gltf.scene;
     model.traverse((child) => {
       if (child.isMesh) {
@@ -92,16 +102,16 @@ function init() {
   document.getElementById('pos-x-increase-button').addEventListener('click', () => moveCamera('x', 1));
   document.getElementById('pos-y-increase-button').addEventListener('click', () => moveCamera('y', 1));
   document.getElementById('pos-z-increase-button').addEventListener('click', () => moveCamera('z', 1));
-  document.getElementById('rot-x-increase-button').addEventListener('click', () => rotateCamera('x', 10));
-  document.getElementById('rot-y-increase-button').addEventListener('click', () => rotateCamera('y', 10));
-  document.getElementById('rot-z-increase-button').addEventListener('click', () => rotateCamera('z', 10));
+  document.getElementById('rot-x-increase-button').addEventListener('click', () => moveLookAt('x', 5));
+  document.getElementById('rot-y-increase-button').addEventListener('click', () => moveLookAt('y', 5));
+  document.getElementById('rot-z-increase-button').addEventListener('click', () => moveLookAt('z', 5));
 
   document.getElementById('pos-x-decrease-button').addEventListener('click', () => moveCamera('x', -1));
   document.getElementById('pos-y-decrease-button').addEventListener('click', () => moveCamera('y', -1));
   document.getElementById('pos-z-decrease-button').addEventListener('click', () => moveCamera('z', -1));
-  document.getElementById('rot-x-decrease-button').addEventListener('click', () => rotateCamera('x', -10));
-  document.getElementById('rot-y-decrease-button').addEventListener('click', () => rotateCamera('y', -10));
-  document.getElementById('rot-z-decrease-button').addEventListener('click', () => rotateCamera('z', -10));
+  document.getElementById('rot-x-decrease-button').addEventListener('click', () => moveLookAt('x', -5));
+  document.getElementById('rot-y-decrease-button').addEventListener('click', () => moveLookAt('y', -5));
+  document.getElementById('rot-z-decrease-button').addEventListener('click', () => moveLookAt('z', -5));
 
   // Initial update of camera info
   updateCameraInfo();
@@ -128,7 +138,7 @@ function onMouseClick(event) {
 
   if (intersects.length > 0) {
     const intersectedObject = intersects[0].object;
-    console.log(intersectedObject.name); // 输出被点击对象的名称
+    console.log(intersectedObject); // 输出被点击对象的名称
 
     // Check if the clicked object is the specific model
     if (intersectedObject.name === 'zhuozil') {
@@ -153,6 +163,13 @@ function moveCamera(axis, amount) {
   updateCameraInfo();
 }
 
+
+function moveLookAt(axis, amount) {
+  lookAtTarget[axis] += amount;
+  camera.lookAt(lookAtTarget);
+  updateCameraInfo();
+}
+
 function rotateCamera(axis, degrees) {
   camera.rotation[axis] += THREE.MathUtils.degToRad(degrees);
   updateCameraInfo();
@@ -161,6 +178,8 @@ function rotateCamera(axis, degrees) {
 function updateCameraInfo() {
   const position = camera.position;
   const rotation = camera.rotation;
+  const lookAtPosition = lookAtTarget;
   document.getElementById('camera-position').innerText = `Position: x=${position.x.toFixed(2)}, y=${position.y.toFixed(2)}, z=${position.z.toFixed(2)}`;
-  document.getElementById('camera-rotation').innerText = `Rotation: x=${rotation.x.toFixed(2)}, y=${rotation.y.toFixed(2)}, z=${rotation.z.toFixed(2)}`;
+  document.getElementById('camera-rotation').innerText = `LookAt: x=${lookAtPosition.x.toFixed(2)}, y=${lookAtPosition.y.toFixed(2)}, z=${lookAtPosition.z.toFixed(2)}`;
+  
 }
