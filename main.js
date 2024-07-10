@@ -138,7 +138,7 @@ function init() {
     .addEventListener("click", () => middleView(camera));
   document
     .getElementById("camera3-button")
-    .addEventListener("click", () => closeView(camera));
+    .addEventListener("click", () => closeView(camera,objects));
 }
 
 function onWindowResize() {
