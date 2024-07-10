@@ -46,7 +46,7 @@ function init() {
     0.1,
     2000
   );
-  
+
   camera.position.set(0, 10, 65);
   const targetLookAt2 = new THREE.Vector3(0, 15, -30);
   // camera.rotation.set(0, 12.54, 0);
@@ -139,7 +139,7 @@ function init() {
     .addEventListener("click", () => middleView(camera));
   document
     .getElementById("camera3-button")
-    .addEventListener("click", () => closeView(camera,objects));
+    .addEventListener("click", () => closeView(camera, objects));
 }
 
 function onWindowResize() {

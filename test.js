@@ -58,7 +58,7 @@ function init() {
   // Load GLB model
   const loader = new GLTFLoader();
   loader.setDRACOLoader(dracoLoader);
-  loader.load('scene.glb', function(gltf) {
+  loader.load('scene.glb', function (gltf) {
     model = gltf.scene;
     model.traverse((child) => {
       if (child.isMesh) {
@@ -68,9 +68,9 @@ function init() {
         objects.push(child); // Add mesh to objects array
       }
     });
-   
+
     scene.add(model);
-  }, undefined, function(error) {
+  }, undefined, function (error) {
     console.error(error);
   });
 
@@ -143,7 +143,7 @@ function onMouseClick(event) {
     // Check if the clicked object is the specific model
     if (intersectedObject.name === 'zhuozil') {
       const targetPosition = new THREE.Vector3(3.1, 0.78, -0.88); // 设定摄像头的新位置
-      
+
     }
   }
 }
@@ -181,5 +181,5 @@ function updateCameraInfo() {
   const lookAtPosition = lookAtTarget;
   document.getElementById('camera-position').innerText = `Position: x=${position.x.toFixed(2)}, y=${position.y.toFixed(2)}, z=${position.z.toFixed(2)}`;
   document.getElementById('camera-rotation').innerText = `LookAt: x=${lookAtPosition.x.toFixed(2)}, y=${lookAtPosition.y.toFixed(2)}, z=${lookAtPosition.z.toFixed(2)}`;
-  
+
 }

@@ -45,7 +45,7 @@ export function closeView(camera, objects) {
 
             // 检查是否是指定模型
             if (intersectedObject.name === '立方体011_Baked') { // 替换为你的模型名称
-              alert("Clicked");
+                alert("Clicked");
                 playVideo("next.webm");
             }
         }
@@ -62,5 +62,5 @@ export function closeView(camera, objects) {
         video.style.top = "50%";
         video.style.left = "50%";
         video.style.transform = "translate(-50%, -50%)";
-        }
-      }
+    }
+}

@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Three.js Example</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div id="loading">
         <video autoplay muted loop>
             <source src="output6.webm" type="video/webm" />
             Your browser does not support the video tag.
-          </video>
+        </video>
     </div>
     <div class="controls" style="display:none">
         <button id="pos-x-increase-button">Move X+</button>
@@ -27,11 +29,11 @@
         <button id="rot-y-decrease-button">Rotate Y-</button>
         <button id="rot-z-decrease-button">Rotate Z-</button>
         <div class="camera-info">
-            <p id="camera-position">Position: </p >
-            <p id="camera-rotation">Rotation: </p >
+            <p id="camera-position">Position: </p>
+            <p id="camera-rotation">Rotation: </p>
         </div>
     </div>
-    <div class="input"  style="display:none">
+    <div class="input" style="display:none">
         <label for="user-input">Enter some text:</label>
         <input type="text" id="user-input" name="user-input">
         <button id="submit-button">Start Voice Recognition</button>
@@ -40,27 +42,30 @@
     <!-- <div id="loading" style="display:none; opacity:0;">Loading...</div> 加载动画元素 -->
 
     <div class="output" id="output" style="display:none; opacity:0;">
-        <p id="output-text"></p >
+        <p id="output-text"></p>
     </div>
 
     <div class="info-container" id="info-container" style="display:none;">
         <h1>Persimmons</h1>
-        <p class="description">the sweet fruit of autumn and winter in China, are known as the "sunshine of fruits."</p >
+        <p class="description">the sweet fruit of autumn and winter in China, are known as the "sunshine of fruits."</p>
         <div class="persimmon-images">
         </div>
         <div class="circle"></div>
         <div class="attributes">
             <div class="attribute">
                 <h2>Look</h2>
-                <p>vibrant orange-red color and round adorable shape<br>they are a delight to the eyes</p >
+                <p>vibrant orange-red color and round adorable shape<br>they are a delight to the eyes</p>
             </div>
             <div class="attribute">
                 <h2>Nutrition</h2>
-                <p>They have a unique texture—smooth, delicate sweet but not cloying—and are rich in nutrients including vitamin C, fiber, and antioxidants</p >
+                <p>They have a unique texture—smooth, delicate sweet but not cloying—and are rich in nutrients including
+                    vitamin C, fiber, and antioxidants</p>
             </div>
             <div class="attribute">
                 <h2>Taste</h2>
-                <p>Each bite is a taste of autumn, bringing the joy of harvest. Crisp and refreshing when eaten fresh, sweet as honey when ripe persimmons can also be made into dried persimmons, persimmon jam, and various other delicacies</p >
+                <p>Each bite is a taste of autumn, bringing the joy of harvest. Crisp and refreshing when eaten fresh,
+                    sweet as honey when ripe persimmons can also be made into dried persimmons, persimmon jam, and
+                    various other delicacies</p>
             </div>
         </div>
     </div>
@@ -69,10 +74,11 @@
     </div>
 
     <button id="camera1-button">distantView</button>
-  <button id="camera2-button">middleView</button>
-  <button id="camera3-button">closeView</button>
+    <button id="camera2-button">middleView</button>
+    <button id="camera3-button">closeView</button>
 
     <script type="module" src="./main.js"></script>
     <script type="module" src="./input-handler.js"></script>
 </body>
+
 </html>
