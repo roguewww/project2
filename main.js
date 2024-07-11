@@ -12,10 +12,12 @@ import { gsap } from "gsap";
 import { closeView } from "./closeView.js";
 import { middleView } from "./middleView.js";
 import { distantView } from "./distantView.js";
+import { setActiveView } from "./state.js";
 
 let scene, camera, renderer, composer, model, controls, raycaster, mouse;
 const objects = [];
 let lastCameraPosition = new THREE.Vector3();
+let activeView = null;
 const loadingDiv = document.getElementById("loading");
 init();
 animate();
@@ -71,12 +73,34 @@ function init() {
       model = gltf.scene;
       model.traverse((child) => {
         if (child.isMesh) {
-          console.log(child); // 输出模型名称到控制台
+          // console.log(child); // 输出模型名称到控制台
           child.castShadow = true;
           child.receiveShadow = true;
           objects.push(child); // Add mesh to objects array
+          if (child.name === "xs") {
+            const video = document.createElement('video');
+            video.src = 'output6.webm';
+            video.loop = true;
+            video.muted = true;
+            video.play();
 
-          // =
+            const videoTexture = new THREE.VideoTexture(video);
+            videoTexture.needsUpdate = true;
+
+            // Ensure the material is compatible with video textures
+            child.material = new THREE.MeshBasicMaterial({ map: videoTexture });
+            child.material.needsUpdate = true;
+        }
+
+        if (child.name === "dhl") {
+          const textureLoader = new THREE.TextureLoader();
+          const texture = textureLoader.load('map.png', () => {
+            texture.needsUpdate = true;
+            child.material = new THREE.MeshBasicMaterial({ map: texture });
+            child.material.needsUpdate = true;
+          });
+        }
+          
         }
       });
       scene.add(model);
@@ -132,14 +156,26 @@ function init() {
   // Move camera on button click
 
   document
-    .getElementById("camera1-button")
-    .addEventListener("click", () => distantView(camera));
-  document
-    .getElementById("camera2-button")
-    .addEventListener("click", () => middleView(camera));
-  document
-    .getElementById("camera3-button")
-    .addEventListener("click", () => closeView(camera, objects));
+  .getElementById("camera1-button")
+  .addEventListener("click", () => {
+    setActiveView('distant'); // 设置当前激活的视图为 distant
+    distantView(camera);
+  });
+
+document
+  .getElementById("camera2-button")
+  .addEventListener("click", () => {
+    setActiveView('middle'); // 设置当前激活的视图为 middle
+    middleView(camera);
+  });
+
+document
+  .getElementById("camera3-button")
+  .addEventListener("click", () => {
+    setActiveView('close'); // 设置当前激活的视图为 close
+    closeView(camera, objects);
+  });
+
 }
 
 function onWindowResize() {
@@ -159,25 +195,25 @@ function onMouseClick(event) {
   raycaster.setFromCamera(mouse, camera);
 
   // Calculate objects intersecting the picking ray
-  const intersects = raycaster.intersectObjects(objects);
+  // const intersects = raycaster.intersectObjects(objects);
 
-  if (intersects.length > 0) {
-    const intersectedObject = intersects[0].object;
-    console.log(intersectedObject.name); // 输出被点击对象的名称
-    // Check if the clicked object is the specific model
-    if (intersectedObject.name === "SM_Statue_RaijinAmo_Baked") {
-      // alert("clicked");
-      // closeView(camera);
-    }
-    if (intersectedObject.name === "SM_Statue_FujinAmo_Baked") {
-      // alert("clicked");
-      // middleView(camera);
-    }
-    if (intersectedObject.name === "立方体002_Baked") {
-      // alert("clicked");
-      //  distantView(camera);
-    }
-  }
+  // if (intersects.length > 0) {
+  //   // const intersectedObject = intersects[0].object;
+  //   // console.log(intersectedObject.name); // 输出被点击对象的名称
+  //   // Check if the clicked object is the specific model
+  //   if (intersectedObject.name === "SM_Statue_RaijinAmo_Baked") {
+  //     // alert("clicked");
+  //     // closeView(camera);
+  //   }
+  //   if (intersectedObject.name === "SM_Statue_FujinAmo_Baked") {
+  //     // alert("clicked");
+  //     // middleView(camera);
+  //   }
+  //   if (intersectedObject.name === "立方体002_Baked") {
+  //     // alert("clicked");
+  //     //  distantView(camera);
+  //   }
+  // }
 }
 
 function onMoveButtonClick() {

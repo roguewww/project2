@@ -12,7 +12,8 @@ import { GammaCorrectionShader } from 'three/examples/jsm/shaders/GammaCorrectio
 let scene, camera, renderer, composer, model, raycaster, mouse;
 const objects = [];
 const lookAtTarget = new THREE.Vector3(0, 10, -29.870);
-
+const targetPosition = new THREE.Vector3(0, 10, 27); // 目标相机的位置
+const targetLookAt = new THREE.Vector3(0, 10, -30); // 目标模型的位置
 
 init();
 animate();
@@ -43,7 +44,7 @@ function init() {
   // Camera
   // const lookAtTarget = new THREE.Vector3(0.555, 10, -29.870);
   camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 2000);
-  camera.position.set(0, 10, 11.47);
+  camera.position.set(0, 10, 27);
   camera.rotation.set(0, 0, 0);
   camera.lookAt(lookAtTarget);
 

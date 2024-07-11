@@ -1,6 +1,12 @@
 import * as THREE from "three";
 import { gsap } from "gsap";
+import { activeView, setActiveView } from "./state.js";
+import { removeMiddleViewMouseMoveListener } from "./middleView.js";
+
 export function distantView(camera) {
+  if (activeView !== 'distant') return;
+  alert("distant");
+  removeMiddleViewMouseMoveListener(camera);
   const duration = 500; // 调整动画持续时间（毫秒）
   const start = Date.now();
   const initialPosition = camera.position.clone();

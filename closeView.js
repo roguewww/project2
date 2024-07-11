@@ -1,7 +1,12 @@
 import * as THREE from "three";
 import { gsap } from "gsap";
+import { activeView} from "./state.js";
+import { removeMiddleViewMouseMoveListener } from "./middleView.js";
 
 export function closeView(camera, objects) {
+  if (activeView !== 'close') return;
+  alert("close");
+  removeMiddleViewMouseMoveListener(camera);
     const duration = 2000; // 调整动画持续时间（毫秒）
     const start = Date.now();
     const initialPosition = camera.position.clone();
@@ -41,7 +46,7 @@ export function closeView(camera, objects) {
 
         if (intersects.length > 0) {
             const intersectedObject = intersects[0].object;
-            console.log(intersectedObject.name); // 输出被点击对象的名称
+            // console.log(intersectedObject.name); // 输出被点击对象的名称
 
             // 检查是否是指定模型
             if (intersectedObject.name === '立方体011_Baked') { // 替换为你的模型名称
@@ -62,5 +67,6 @@ export function closeView(camera, objects) {
         video.style.top = "50%";
         video.style.left = "50%";
         video.style.transform = "translate(-50%, -50%)";
+        video.style.pointerEvents = "none";
     }
 }
