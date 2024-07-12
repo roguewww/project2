@@ -73,7 +73,7 @@ function init() {
       model = gltf.scene;
       model.traverse((child) => {
         if (child.isMesh) {
-          // console.log(child); // 输出模型名称到控制台
+          console.log(child); // 输出模型名称到控制台
           child.castShadow = true;
           child.receiveShadow = true;
           objects.push(child); // Add mesh to objects array
@@ -195,25 +195,25 @@ function onMouseClick(event) {
   raycaster.setFromCamera(mouse, camera);
 
   // Calculate objects intersecting the picking ray
-  // const intersects = raycaster.intersectObjects(objects);
+  const intersects = raycaster.intersectObjects(objects);
 
-  // if (intersects.length > 0) {
-  //   // const intersectedObject = intersects[0].object;
-  //   // console.log(intersectedObject.name); // 输出被点击对象的名称
-  //   // Check if the clicked object is the specific model
-  //   if (intersectedObject.name === "SM_Statue_RaijinAmo_Baked") {
-  //     // alert("clicked");
-  //     // closeView(camera);
-  //   }
-  //   if (intersectedObject.name === "SM_Statue_FujinAmo_Baked") {
-  //     // alert("clicked");
-  //     // middleView(camera);
-  //   }
-  //   if (intersectedObject.name === "立方体002_Baked") {
-  //     // alert("clicked");
-  //     //  distantView(camera);
-  //   }
-  // }
+  if (intersects.length > 0) {
+    const intersectedObject = intersects[0].object;
+    console.log(intersectedObject.name); // 输出被点击对象的名称
+    // Check if the clicked object is the specific model
+    if (intersectedObject.name === "SM_Statue_RaijinAmo_Baked") {
+      // alert("clicked");
+      // closeView(camera);
+    }
+    if (intersectedObject.name === "SM_Statue_FujinAmo_Baked") {
+      // alert("clicked");
+      // middleView(camera);
+    }
+    if (intersectedObject.name === "立方体002_Baked") {
+      // alert("clicked");
+      //  distantView(camera);
+    }
+  }
 }
 
 function onMoveButtonClick() {
