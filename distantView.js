@@ -51,6 +51,6 @@ export function distantView(camera) {
     //   }
   };
   animateCamera();
-
-
 }
+
+

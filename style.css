@@ -5,6 +5,9 @@ canvas {
   display: block;
 }
 
+.hidden{
+  display: none;
+}
 
 .three-container{
   position: absolute;
@@ -42,6 +45,7 @@ button {
   align-items: center;
   z-index: 1000;
 }
+
 video {
   position: absolute;
   top: 50%;

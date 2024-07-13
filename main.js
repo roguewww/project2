@@ -19,6 +19,8 @@ const objects = [];
 let lastCameraPosition = new THREE.Vector3();
 let activeView = null;
 const loadingDiv = document.getElementById("loading");
+const distantcontent = document.getElementById("distant-content");
+
 init();
 animate();
 
@@ -73,7 +75,7 @@ function init() {
       model = gltf.scene;
       model.traverse((child) => {
         if (child.isMesh) {
-          console.log(child); // 输出模型名称到控制台
+          // console.log(child); // 输出模型名称到控制台
           child.castShadow = true;
           child.receiveShadow = true;
           objects.push(child); // Add mesh to objects array
@@ -160,6 +162,7 @@ function init() {
     .addEventListener("click", () => {
       setActiveView('distant'); // 设置当前激活的视图为 distant
       distantView(camera);
+      distantcontent.style.display = "block";
     });
 
   document
@@ -167,6 +170,7 @@ function init() {
     .addEventListener("click", () => {
       setActiveView('middle'); // 设置当前激活的视图为 middle
       middleView(camera);
+      distantcontent.style.display = "none";
     });
 
   document
@@ -174,8 +178,10 @@ function init() {
     .addEventListener("click", () => {
       setActiveView('close'); // 设置当前激活的视图为 close
       closeView(camera, objects);
+      distantcontent.style.display = "none";
     });
-
+  
+    distantcontent.style.display = "block";
 }
 
 function onWindowResize() {
@@ -214,21 +220,6 @@ function onMouseClick(event) {
       //  distantView(camera);
     }
   }
-}
-
-function onMoveButtonClick() {
-  gsap.to(camera.position, {
-    duration: 2,
-    x: 0.04, // 设置新的x位置
-    y: 9.03, // 设置新的y位置
-    z: 30, // 设置新的z位置
-    onUpdate: function () {
-      // camera.lookAt(scene.position);
-    },
-    onComplete: function () {
-      lastCameraPosition.copy(camera.position);
-    },
-  });
 }
 
 function animate() {
