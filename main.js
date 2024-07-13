@@ -90,17 +90,17 @@ function init() {
             // Ensure the material is compatible with video textures
             child.material = new THREE.MeshBasicMaterial({ map: videoTexture });
             child.material.needsUpdate = true;
-        }
+          }
 
-        if (child.name === "dhl") {
-          const textureLoader = new THREE.TextureLoader();
-          const texture = textureLoader.load('map.png', () => {
-            texture.needsUpdate = true;
-            child.material = new THREE.MeshBasicMaterial({ map: texture });
-            child.material.needsUpdate = true;
-          });
-        }
-          
+          if (child.name === "dhl") {
+            const textureLoader = new THREE.TextureLoader();
+            const texture = textureLoader.load('map.png', () => {
+              texture.needsUpdate = true;
+              child.material = new THREE.MeshBasicMaterial({ map: texture });
+              child.material.needsUpdate = true;
+            });
+          }
+
         }
       });
       scene.add(model);
@@ -156,25 +156,25 @@ function init() {
   // Move camera on button click
 
   document
-  .getElementById("camera1-button")
-  .addEventListener("click", () => {
-    setActiveView('distant'); // 设置当前激活的视图为 distant
-    distantView(camera);
-  });
+    .getElementById("camera1-button")
+    .addEventListener("click", () => {
+      setActiveView('distant'); // 设置当前激活的视图为 distant
+      distantView(camera);
+    });
 
-document
-  .getElementById("camera2-button")
-  .addEventListener("click", () => {
-    setActiveView('middle'); // 设置当前激活的视图为 middle
-    middleView(camera);
-  });
+  document
+    .getElementById("camera2-button")
+    .addEventListener("click", () => {
+      setActiveView('middle'); // 设置当前激活的视图为 middle
+      middleView(camera);
+    });
 
-document
-  .getElementById("camera3-button")
-  .addEventListener("click", () => {
-    setActiveView('close'); // 设置当前激活的视图为 close
-    closeView(camera, objects);
-  });
+  document
+    .getElementById("camera3-button")
+    .addEventListener("click", () => {
+      setActiveView('close'); // 设置当前激活的视图为 close
+      closeView(camera, objects);
+    });
 
 }
 
