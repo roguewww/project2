@@ -27,28 +27,6 @@ export function distantView(camera) {
     if (t < 1) {
       requestAnimationFrame(animateCamera);
     }
-    //   else {
-    //     // 摄像头到达指定位置后延迟显示弹窗
-    //     setTimeout(() => {
-    //       const infoDiv = document.getElementById("info-container");
-    //       gsap.to(infoDiv, { duration: 0.5, opacity: 1, display: 'block' });
-
-    //       // 添加全局点击事件监听器
-    //       const handleClickOutside = (event) => {
-    //         if (!infoDiv.contains(event.target)) {
-    //           gsap.to(infoDiv, {
-    //             duration: 0.5, opacity: 0, onComplete: () => {
-    //               infoDiv.style.display = "none";
-    //               // 回到初始位置
-    //               animateCameraBack();
-    //             }
-    //           });
-    //           document.removeEventListener('click', handleClickOutside);
-    //         }
-    //       };
-    //       document.addEventListener('click', handleClickOutside);
-    //     }, 250); // 延迟250毫秒
-    //   }
   };
   animateCamera();
 }

@@ -1,9 +1,15 @@
 // 所有跟大模型有关的都在llm.js
 
 document.addEventListener('DOMContentLoaded', function() {
+    const distantContent = document.getElementById('distant-content');
+    if (!distantContent) {
+        console.error('Element with id "distant-content" not found');
+        return;
+    }
+
     const startButton = document.createElement('button');
     startButton.textContent = 'Start Voice Recognition';
-    document.body.appendChild(startButton);
+    distantContent.appendChild(startButton);
 
     const contentDiv = document.createElement('div');
     contentDiv.id = 'content';
@@ -13,11 +19,11 @@ document.addEventListener('DOMContentLoaded', function() {
     contentDiv.style.width = '300px';
     contentDiv.style.height = '100px';
     contentDiv.style.overflow = 'auto';
-    document.body.appendChild(contentDiv);
+    distantContent.appendChild(contentDiv);
 
     const sendButton = document.createElement('button');
     sendButton.textContent = 'Send to LLM API';
-    document.body.appendChild(sendButton);
+    distantContent.appendChild(sendButton);
 
     const outputDiv = document.createElement('div');
     outputDiv.id = 'output';
@@ -26,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
     outputDiv.style.width = '300px';
     outputDiv.style.height = '100px';
     outputDiv.style.overflow = 'auto';
-    document.body.appendChild(outputDiv);
+    distantContent.appendChild(outputDiv);
 
     const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
     recognition.interimResults = true;
