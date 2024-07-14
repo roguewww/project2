@@ -1,9 +1,9 @@
-// 所有跟大模型有关的都在llm.js
-
 document.addEventListener('DOMContentLoaded', function() {
+    const distantContentDiv = document.getElementById('distant-content');
+    
     const startButton = document.createElement('button');
     startButton.textContent = 'Start Voice Recognition';
-    document.body.appendChild(startButton);
+    distantContentDiv.appendChild(startButton);
 
     const contentDiv = document.createElement('div');
     contentDiv.id = 'content';
@@ -13,11 +13,11 @@ document.addEventListener('DOMContentLoaded', function() {
     contentDiv.style.width = '300px';
     contentDiv.style.height = '100px';
     contentDiv.style.overflow = 'auto';
-    document.body.appendChild(contentDiv);
+    distantContentDiv.appendChild(contentDiv);
 
     const sendButton = document.createElement('button');
     sendButton.textContent = 'Send to LLM API';
-    document.body.appendChild(sendButton);
+    distantContentDiv.appendChild(sendButton);
 
     const outputDiv = document.createElement('div');
     outputDiv.id = 'output';
@@ -26,13 +26,16 @@ document.addEventListener('DOMContentLoaded', function() {
     outputDiv.style.width = '300px';
     outputDiv.style.height = '100px';
     outputDiv.style.overflow = 'auto';
-    document.body.appendChild(outputDiv);
+    distantContentDiv.appendChild(outputDiv);
 
     const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
     recognition.interimResults = true;
     recognition.lang = 'en-US';
 
     let transcript = '';
+
+    // Load saved content from localStorage
+    contentDiv.textContent = localStorage.getItem('content') || '';
 
     recognition.onresult = (event) => {
         let interimTranscript = '';
@@ -44,6 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
         contentDiv.textContent = (transcript + interimTranscript).slice(0, 400);
+        localStorage.setItem('content', contentDiv.textContent);
     };
 
     recognition.onerror = (event) => {
@@ -52,6 +56,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     startButton.addEventListener('click', () => {
         recognition.start();
+    });
+
+    contentDiv.addEventListener('input', () => {
+        localStorage.setItem('content', contentDiv.textContent);
     });
 
     sendButton.addEventListener('click', async () => {
