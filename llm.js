@@ -14,11 +14,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const contentDiv = document.createElement('div');
     contentDiv.id = 'content';
     contentDiv.contentEditable = true;
-    contentDiv.style.border = '1px solid black';
-    contentDiv.style.padding = '10px';
-    contentDiv.style.width = '300px';
-    contentDiv.style.height = '100px';
-    contentDiv.style.overflow = 'auto';
     distantContent.appendChild(contentDiv);
 
     const sendButton = document.createElement('button');
@@ -27,10 +22,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const outputDiv = document.createElement('div');
     outputDiv.id = 'output';
-    outputDiv.style.border = '1px solid black';
-    outputDiv.style.padding = '10px';
-    outputDiv.style.width = '300px';
-    outputDiv.style.height = '100px';
     outputDiv.style.overflow = 'auto';
     distantContent.appendChild(outputDiv);
 
