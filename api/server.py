@@ -13,7 +13,7 @@ logging.basicConfig(filename='app.log', level=logging.INFO,
 class DeepSeek(object):
     def __init__(self, user_prompt) -> None:
         # 这里进行设置，api和sys_prompt #
-        self.api_key = '<SECRET>'
+        self.api_key = 'sk-17f43bc8cb20470188d8e89e2506c41b'
         self.base_url = "https://api.deepseek.com"
         # 这里修改system prompt
         self.sys_prompt = "You are a helpful assistant"
