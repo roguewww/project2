@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             const data = await response.json();
             outputDiv.textContent = data.llm;
-            const utterance = new SpeechSynthesisUtterance(data.response);
+            const utterance = new SpeechSynthesisUtterance(data.llm);
             utterance.lang = 'en-US';
             window.speechSynthesis.speak(utterance);
         } catch (error) {
