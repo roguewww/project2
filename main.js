@@ -20,6 +20,7 @@ let lastCameraPosition = new THREE.Vector3();
 let activeView = null;
 const loadingDiv = document.getElementById("loading");
 const distantcontent = document.getElementById("distant-content");
+const blurOverlay = document.getElementById("blur-overlay");
 
 init();
 animate();
@@ -163,6 +164,8 @@ function init() {
       setActiveView('distant'); // 设置当前激活的视图为 distant
       distantView(camera);
       distantcontent.style.display = "block";
+      blurOverlay.style.display = "block";
+      gsap.to(blurOverlay, { duration: 1, opacity: 1 });
     });
 
   document
@@ -171,6 +174,13 @@ function init() {
       setActiveView('middle'); // 设置当前激活的视图为 middle
       middleView(camera);
       distantcontent.style.display = "none";
+      gsap.to(blurOverlay, {
+        duration: 1,
+        opacity: 0,
+        onComplete: () => {
+            blurOverlay.style.display = "none";
+        }
+    });
     });
 
   document
@@ -179,9 +189,18 @@ function init() {
       setActiveView('close'); // 设置当前激活的视图为 close
       closeView(camera, objects);
       distantcontent.style.display = "none";
+      gsap.to(blurOverlay, {
+        duration: 1,
+        opacity: 0,
+        onComplete: () => {
+            blurOverlay.style.display = "none";
+        }
+    });
     });
   
-    distantcontent.style.display = "block";
+    distantcontent.style.display = "flex";
+    blurOverlay.style.display = "block";
+    gsap.to(blurOverlay, { duration: 1, opacity: 1 });
 }
 
 function onWindowResize() {

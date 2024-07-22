@@ -51,7 +51,7 @@ export function closeView(camera, objects) {
             // 检查是否是指定模型
             if (intersectedObject.name === '立方体011_Baked') { // 替换为你的模型名称
                 // alert("Clicked");
-                playVideo("next.webm");
+                playVideo("jj.webm");
             }
 
             if (intersectedObject.name === 'Sphere002_Baked') { // 骨头

@@ -59,7 +59,7 @@ function init() {
   // Load GLB model
   const loader = new GLTFLoader();
   loader.setDRACOLoader(dracoLoader);
-  loader.load('scene.glb', function (gltf) {
+  loader.load('7.10.glb', function (gltf) {
     model = gltf.scene;
     model.traverse((child) => {
       if (child.isMesh) {

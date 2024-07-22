@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     distantContent.appendChild(startButton);
 
     const contentDiv = document.createElement('div');
-    contentDiv.id = 'content';
+    contentDiv.id = 'contentDiv';
     contentDiv.contentEditable = true;
     distantContent.appendChild(contentDiv);
 
