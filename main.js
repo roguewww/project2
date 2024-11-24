@@ -13,6 +13,11 @@ import { closeView } from "./closeView.js";
 import { middleView } from "./middleView.js";
 import { distantView } from "./distantView.js";
 import { setActiveView } from "./state.js";
+import { globalState } from './global.js';
+
+console.log("File1.js: Initial value:", globalState.sharedVariable);
+globalState.sharedVariable = 100; // 修改值
+console.log("File1.js: Updated value:", globalState.sharedVariable);
 
 let scene, camera, renderer, composer, model, controls, raycaster, mouse;
 const objects = [];
@@ -21,9 +26,33 @@ let activeView = null;
 const loadingDiv = document.getElementById("loading");
 const distantcontent = document.getElementById("distant-content");
 const blurOverlay = document.getElementById("blur-overlay");
+const backtomiddle = document.getElementById("backtomiddle");
+const buttons = [
+  {
+    element: document.getElementById("camera3-button"),
+    position: new THREE.Vector3(20, 8, 0),
+  },
+  {
+    element: document.getElementById("camera2-button"),
+    position: new THREE.Vector3(-0.9, 0.9, 0),
+  },
+  {
+    element: document.getElementById("camera1-button"),
+    position: new THREE.Vector3(-20, -2, 0),
+  },
+];
 
 init();
 animate();
+
+const backPack=document.getElementById("backPack");
+backPack.addEventListener("click", goToBackpack);
+
+function goToBackpack() {
+  alert("sidmji");
+  window.location.href = "items.html";
+}
+
 
 function init() {
   const container = document.createElement("div");
@@ -80,37 +109,36 @@ function init() {
           child.castShadow = true;
           child.receiveShadow = true;
           objects.push(child); // Add mesh to objects array
-          if (child.name === "xs") {
-            const video = document.createElement('video');
-            video.src = 'output6.webm';
-            video.loop = true;
-            video.muted = true;
-            video.play();
+          // if (child.name === "xs") {
+          //   const video = document.createElement("video");
+          //   video.src = "output6.webm";
+          //   video.loop = true;
+          //   video.muted = true;
+          //   video.play();
 
-            const videoTexture = new THREE.VideoTexture(video);
-            videoTexture.needsUpdate = true;
+          //   const videoTexture = new THREE.VideoTexture(video);
+          //   videoTexture.needsUpdate = true;
 
-            // Ensure the material is compatible with video textures
-            child.material = new THREE.MeshBasicMaterial({ map: videoTexture });
-            child.material.needsUpdate = true;
-          }
+          //   // Ensure the material is compatible with video textures
+          //   child.material = new THREE.MeshBasicMaterial({ map: videoTexture });
+          //   child.material.needsUpdate = true;
+          // }
 
-          if (child.name === "dhl") {
-            const textureLoader = new THREE.TextureLoader();
-            const texture = textureLoader.load('map.png', () => {
-              texture.needsUpdate = true;
-              child.material = new THREE.MeshBasicMaterial({ map: texture });
-              child.material.needsUpdate = true;
-            });
-          }
-
+          // if (child.name === "dhl") {
+          //   const textureLoader = new THREE.TextureLoader();
+          //   const texture = textureLoader.load("map.png", () => {
+          //     texture.needsUpdate = true;
+          //     child.material = new THREE.MeshBasicMaterial({ map: texture });
+          //     child.material.needsUpdate = true;
+          //   });
+          // }
         }
       });
       scene.add(model);
       loadingDiv.style.display = "none";
     },
     function (xhr) {
-      console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+      // console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
     },
     undefined,
     function (error) {
@@ -158,49 +186,85 @@ function init() {
 
   // Move camera on button click
 
-  document
-    .getElementById("camera1-button")
-    .addEventListener("click", () => {
-      setActiveView('distant'); // 设置当前激活的视图为 distant
-      distantView(camera);
-      distantcontent.style.display = "block";
-      blurOverlay.style.display = "block";
-      gsap.to(blurOverlay, { duration: 1, opacity: 1 });
-    });
-
-  document
-    .getElementById("camera2-button")
-    .addEventListener("click", () => {
-      setActiveView('middle'); // 设置当前激活的视图为 middle
-      middleView(camera);
-      distantcontent.style.display = "none";
-      gsap.to(blurOverlay, {
-        duration: 1,
-        opacity: 0,
-        onComplete: () => {
-            blurOverlay.style.display = "none";
-        }
-    });
-    });
-
-  document
-    .getElementById("camera3-button")
-    .addEventListener("click", () => {
-      setActiveView('close'); // 设置当前激活的视图为 close
-      closeView(camera, objects);
-      distantcontent.style.display = "none";
-      gsap.to(blurOverlay, {
-        duration: 1,
-        opacity: 0,
-        onComplete: () => {
-            blurOverlay.style.display = "none";
-        }
-    });
-    });
-  
-    distantcontent.style.display = "flex";
+  document.getElementById("camera1-button").addEventListener("click", () => {
+    setActiveView("distant"); // 设置当前激活的视图为 distant
+    distantView(camera);
+    distantcontent.style.display = "block";
     blurOverlay.style.display = "block";
     gsap.to(blurOverlay, { duration: 1, opacity: 1 });
+    gsap.to(backtomiddle, {
+      duration: 2,
+      opacity: 0,
+      onComplete: () => {
+        backtomiddle.style.display = "none";
+      },
+    });
+  });
+
+  document.getElementById("backtomiddle").addEventListener("click", () => {
+    setActiveView("middle"); // 设置当前激活的视图为 middle
+    middleView(camera);
+    distantcontent.style.display = "none";
+    gsap.to(blurOverlay, {
+      duration: 1,
+      opacity: 0,
+      onComplete: () => {
+        blurOverlay.style.display = "none";
+      },
+    });
+    gsap.to(backtomiddle, {
+      duration: 2,
+      opacity: 0,
+      onComplete: () => {
+        backtomiddle.style.display = "none";
+      },
+    });
+  });
+
+  document.getElementById("camera2-button").addEventListener("click", () => {
+    setActiveView("middle"); // 设置当前激活的视图为 middle
+    middleView(camera);
+    distantcontent.style.display = "none";
+    gsap.to(blurOverlay, {
+      duration: 1,
+      opacity: 0,
+      onComplete: () => {
+        blurOverlay.style.display = "none";
+      },
+    });
+    gsap.to(backtomiddle, {
+      duration: 2,
+      opacity: 0,
+      onComplete: () => {
+        backtomiddle.style.display = "none";
+      },
+    });
+  });
+
+  document.getElementById("camera3-button").addEventListener("click", () => {
+    setActiveView("close"); // 设置当前激活的视图为 close
+    closeView(camera, objects);
+    distantcontent.style.display = "none";
+    gsap.to(blurOverlay, {
+      duration: 1,
+      opacity: 0,
+      onComplete: () => {
+        blurOverlay.style.display = "none";
+      },
+    });
+
+    gsap.to(backtomiddle, {
+      duration: 2,
+      opacity: 100,
+      onComplete: () => {
+        backtomiddle.style.display = "block";
+      },
+    });
+  });
+
+  distantcontent.style.display = "flex";
+  blurOverlay.style.display = "block";
+  gsap.to(blurOverlay, { duration: 1, opacity: 1 });
 }
 
 function onWindowResize() {
@@ -209,6 +273,18 @@ function onWindowResize() {
 
   renderer.setSize(window.innerWidth, window.innerHeight);
   composer.setSize(window.innerWidth, window.innerHeight);
+}
+
+function updateButtonPositions() {
+  buttons.forEach((button) => {
+    const vector = button.position.clone().project(camera);
+    let buttonPosition = {
+      x: (vector.x * 0.5 + 0.5) * window.innerWidth,
+      y: (-vector.y * 0.5 + 0.5) * window.innerHeight,
+    };
+    button.element.style.left = `${buttonPosition.x}px`;
+    button.element.style.top = `${buttonPosition.y}px`;
+  });
 }
 
 function onMouseClick(event) {
@@ -224,7 +300,7 @@ function onMouseClick(event) {
 
   if (intersects.length > 0) {
     const intersectedObject = intersects[0].object;
-    console.log(intersectedObject.name); // 输出被点击对象的名称
+    // console.log(intersectedObject.name); // 输出被点击对象的名称
     // Check if the clicked object is the specific model
     if (intersectedObject.name === "SM_Statue_RaijinAmo_Baked") {
       // alert("clicked");
@@ -250,6 +326,7 @@ function animate() {
 
   // Render scene with composer
   composer.render();
+  updateButtonPositions();
 }
 
 function updateMaterials() {
@@ -259,3 +336,5 @@ function updateMaterials() {
     }
   });
 }
+
+

@@ -5,15 +5,15 @@ canvas {
   display: block;
 }
 
-.hidden{
+.hidden {
   display: none;
 }
 
-.three-container{
+.three-container {
   position: absolute;
-  top:0;
-  left:0;
-  z-index:-1;
+  top: 0;
+  left: 0;
+  z-index: -1;
 }
 .controls {
   position: absolute;
@@ -22,8 +22,8 @@ canvas {
   background: rgba(255, 255, 255, 0);
   padding: 10px;
   border-radius: 5px;
-  z-index:3;
-  color:white;
+  z-index: 3;
+  color: white;
 }
 .camera-info {
   margin-top: 10px;
@@ -57,11 +57,10 @@ video {
   object-fit: cover;
 }
 
-
 #videoContainer {
   position: absolute;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.8);
@@ -70,7 +69,6 @@ video {
   align-items: center;
   z-index: 999;
 }
-
 
 .blur-overlay {
   position: fixed;
@@ -94,50 +92,66 @@ video {
   position: absolute;
   top: 10px;
   right: 10px;
-  background:transparent;
+  background: transparent;
   color: white;
   border: none;
   padding: 10px;
   cursor: pointer;
 }
-#distant-content{
-  position: relative;
-z-index: 3;
 
-}
-#contentDiv{
-  color:white;
-  border:solid 1px white;
-  height:100px;
-  width:200px;
+#distant-content {
+  width: 300px;
+  height: auto;
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  z-index: 3;
+  flex-direction: column;
 }
 
-#output{
-  color:white;
-  border:solid 1px white;
-  height:100px;
+#output {
+  background-color: #917676d0;
+  border: #dbb3b3d8;
+  border-radius: 20px;
+}
+#input-container {
+  width: 400px;
+  display: flex;
+  flex-direction: row;
+}
+#contentDiv {
+  color: white;
+  border: solid 1px white;
+  height: 100px;
+  width: 200px;
+}
+
+#output {
+  color: white;
+  border: solid 1px white;
+  height: 100px;
 }
 
 .button-container {
   position: absolute;
-  top:40%;
-  left:60%;
+  top: 40%;
+  left: 60%;
   width: auto;
   height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  color:#FFCAB3;  
-  z-index:2;
+  color: #ffcab3;
+  z-index: 2;
 }
 
-.button-container p{
-font-size: 10px;
-margin: 0px;
-font-family: "Stalinist One", sans-serif;
-font-weight: 400;
-font-style: normal;
-text-align: center;
+.button-container p {
+  font-size: 10px;
+  margin: 0px;
+  font-family: "Stalinist One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  text-align: center;
 }
 
 .button-container img {
@@ -145,24 +159,21 @@ text-align: center;
   width: 100%;
   height: 100%;
   transition: transform 0.1s filter 0.1s;
-  filter: drop-shadow(0px 0px 7px rgb(222, 0, 0));
-}
-
-.image-1 {
-  
+  opacity: 70%;
+  scale: 0.6;
+  /* filter: drop-shadow(0px 0px 7px rgb(222, 0, 0)); */
 }
 
 .image-2 {
-  
   transition: none; /* Prevents the default transition on hover */
 }
 
 @keyframes rotate {
   from {
-      transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   to {
-      transform: rotate(360deg);
+    transform: rotate(360deg);
   }
 }
 
@@ -171,8 +182,313 @@ text-align: center;
   transform: scale(1.05);
 }
 
-#camera3-button{
+#camera3-button {
   position: absolute;
-  top:45%;
-  left:45%;
+  top: 45%;
+  left: 45%;
+}
+
+
+#backpack {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  color: #ffcab3;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  font-size: 10px;
+  margin: 0px;
+  font-family: "Stalinist One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  text-align: center;
+}
+
+
+#backtomiddle {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  color: #ffcab3;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  font-size: 10px;
+  margin: 0px;
+  font-family: "Stalinist One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  text-align: center;
+  display: none;
+}
+
+#submit-button {
+  width: 50px; /* 设置按钮宽度 */
+  height: 50px; /* 设置按钮高度 */
+  background-image: url("/mic.png"); /* 替换为你图片的URL */
+  background-size: contain; /* 让图片覆盖整个按钮 */
+  background-position: center; /* 图片居中显示 */
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border: none; /* 去掉按钮的边框 */
+  color: white; /* 按钮上的文字颜色 */
+  font-size: 16px; /* 按钮上的文字大小 */
+}
+
+#contentDiv {
+  width: 200px; /* 设置按钮宽度 */
+  height: 50px; /* 设置按钮高度 */
+  background-image: url("/input.png"); /* 替换为你图片的URL */
+  background-size: contain; /* 让图片覆盖整个按钮 */
+  background-position: center; /* 图片居中显示 */
+  background-repeat: no-repeat;
+  line-height: 50px; /* 让 line-height 等于容器的高度，实现垂直居中 */
+  overflow: hidden;
+  text-align: center; /* 水平居中 */
+  border: none; /* 去掉按钮的边框 */
+  color: white; /* 按钮上的文字颜色 */
+  font-size: 16px; /* 按钮上的文字大小 */
+  background-color: aqua;
+}
+
+#sendButton {
+  width: 50px; /* 设置按钮宽度 */
+  height: 50px; /* 设置按钮高度 */
+  background-image: url("/send.png"); /* 替换为你图片的URL */
+  background-size: contain; /* 让图片覆盖整个按钮 */
+  background-position: center; /* 图片居中显示 */
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border: none; /* 去掉按钮的边框 */
+  color: white; /* 按钮上的文字颜色 */
+  font-size: 16px; /* 按钮上的文字大小 */
+}
+
+.container {
+  width: 100vw;
+  margin: 0 auto;
+  padding: 20px;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: background-image 0.5s ease;
+  position: relative;
+  background-image: url("items/default.jpg");
+}
+
+.previous-step {
+  background-image: url("items/titleBg.svg");
+  background-size: 100% 100%; /* 让背景图完全覆盖元素 */
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 10px 20px; /* 调整内边距让文字居中 */
+  width: fit-content; /* 让宽度适应内容 */
+  color: #c4a484;
+  font-family: "Arial", sans-serif;
+  margin-bottom: 20px;
+}
+
+.main-content {
+  display: flex;
+  gap: 30px;
+}
+
+.left-panel {
+  flex: 1;
+}
+
+.right-panel {
+  flex: 2;
+  display: flex;
+
+  align-items: center; /* 垂直居中 */
+}
+
+.props-grid,
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 15px;
+  align-items: center;
+}
+
+.prop-item,
+.result-item {
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  aspect-ratio: 1;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box; /* 边框在内部 */
+  border: 2px solid transparent; /* 默认状态下的边框 */
+  overflow: hidden; /* 防止图片溢出容器 */
+}
+
+.prop-item:hover,
+.result-item:hover {
+  border: 2px solid #ffd90047;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.prop-item.selected,
+.result-item.selected {
+  border: 2px solid #ffd90091;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+.prop-item img,
+.result-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 确保图片填充整个容器且保持比例 */
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.item-details {
+  width: 30%;
+  background-color: transparent;
+  margin-bottom: 20px;
+}
+
+.drum-display {
+  text-align: center;
+}
+
+.drum-display img {
+  max-width: 100%;
+  height: auto;
+}
+
+.divination-results {
+  margin-top: 100px;
+}
+
+h2,
+h3,
+h4 {
+  color: #966c4a;
+  font-family: "Stalinist One", sans-serif;
+  margin: 0;
+  padding: 10px 0;
+}
+
+p {
+  line-height: 1.6;
+  margin: 10px 0;
+}
+
+.function,
+.appearance {
+  color: #966c4a;
+}
+
+.props-line {
+  width: 100%;
+  height: 1px;
+  background-color: #966c4a;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.introContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  text-align: center;
+  background-image: url("items/default.jpg");
+}
+
+.artifact img {
+  max-height: 300px;
+}
+
+.message-box {
+  padding: 20px;
+  border-radius: 10px;
+  display: inline-block;
+  margin-left: 20px;
+  position: relative;
+  right: -10%;
+  display: flex;
+  background-image: url("dialogue.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  align-items: center;
+  justify-content: center;
+  width: 700px; /* 设置固定宽度 */
+  height: 250px; /* 设置固定高度 */
+}
+
+.message-box p {
+  max-width: 80%;
+  font-size: 20px;
+  font-family: "Stalinist One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: white;
+}
+
+.key {
+  background-color: #ffd700;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.next-button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  display: inline-block;
+  margin-top: 10px;
+  cursor: pointer;
+  margin-top: 400px;
+  background-image: url("next.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-family: "Stalinist One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: white;
+}
+
+#videoPlayer {
+  width: 100%; /* Adjust to fit inside the container */
+  height: 100%;
+}
+
+#imageContainer {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  /* transform: translate(-50%, -50%); */
+  z-index: 10; /* Ensure it appears on top of the video */
+}
+
+#displayImage {
+  width: 300px;
+  height: auto;
 }

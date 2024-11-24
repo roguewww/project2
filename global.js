@@ -1,0 +1,1 @@
+export const globalState = { sharedVariable: 42 }; // 定义共享对象

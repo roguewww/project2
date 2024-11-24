@@ -7,23 +7,29 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
-    const startButton = document.createElement('button');
-    startButton.textContent = 'Start Voice Recognition';
-    distantContent.appendChild(startButton);
-
-    const contentDiv = document.createElement('div');
-    contentDiv.id = 'contentDiv';
-    contentDiv.contentEditable = true;
-    distantContent.appendChild(contentDiv);
-
-    const sendButton = document.createElement('button');
-    sendButton.textContent = 'Send to LLM API';
-    distantContent.appendChild(sendButton);
-
     const outputDiv = document.createElement('div');
     outputDiv.id = 'output';
     outputDiv.style.overflow = 'auto';
     distantContent.appendChild(outputDiv);
+
+    const inputContainer = document.createElement('div');
+    inputContainer.id = 'input-container';
+    distantContent.appendChild(inputContainer);
+
+    const startButton = document.createElement('button');
+    startButton.id = 'submit-button';
+    inputContainer.appendChild(startButton);
+
+    const contentDiv = document.createElement('div');
+    contentDiv.id = 'contentDiv';
+    contentDiv.contentEditable = true;
+    inputContainer.appendChild(contentDiv);
+
+    const sendButton = document.createElement('button');
+    sendButton.id = 'sendButton';
+    inputContainer.appendChild(sendButton);
+
+   
 
     const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
     recognition.interimResults = true;

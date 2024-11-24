@@ -43,39 +43,57 @@
     <div class="input" style="display: none">
       <label for="user-input">Enter some text:</label>
       <input type="text" id="user-input" name="user-input" />
-      <button id="submit-button">Start Voice Recognition</button>
     </div>
     <!-- <div id="loading" style="display:none; opacity:0;">Loading...</div> 加载动画元素 -->
     <div class="output" id="output" style="display: none; opacity: 0">
       <p id="output-text"></p>
     </div>
-
-    <div id="videoContainer" style="display: none">
+    
+    <div id="videoContainer" style="display: none; position: relative;">
       <video id="videoPlayer" autoplay></video>
       <button id="closeButton">X</button>
-    </div>
+      <div id="imageContainer" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+          <img id="displayImage" />
+        
+      </div>
+  </div>
 
-    <button id="camera1-button">distantView</button>
-    <!-- <button id="camera2-button">middleView</button> -->
-    <!-- <button id="camera3-button">closeView</button> -->
+  
+
+    <div
+    class="button-container"
+    id="camera1-button"
+    style="transform: scale(1); transform-origin: center"
+  >
+    <div style="position: relative; width: 100px; height: 100px">
+      <img src="button4.png" alt="Image 2" class="image-2" />
+    </div>
+    <p>distant view</p>
+  </div>
 
     <div class="button-container" id="camera2-button">
       <div style="position: relative; width: 100px; height: 100px">
-        <img src="button2.png" alt="Image 2" class="image-2" />
+        <img src="button4.png" alt="Image 2" class="image-2" />
       </div>
-      <p>move foward</p>
+      <p>middle view</p>
     </div>
 
     <div
       class="button-container"
       id="camera3-button"
-      style="transform: scale(0.5); transform-origin: center"
+      style="transform: scale(1); transform-origin: center"
     >
       <div style="position: relative; width: 100px; height: 100px">
-        <img src="button1.png" alt="Image 2" class="image-2" />
+        <img src="button4.png" alt="Image 2" class="image-2" />
       </div>
-      <p>move foward</p>
+      <p>close view</p>
     </div>
+
+
+    <div class="next-button" id="backPack" onclick="goToBackpack()">Backpack</div>
+
+    <button id="backtomiddle">back to middle view</button>
+
 
     <div id="distant-content" style="display: none">
       <!-- 所有的东西都在llm.js -->

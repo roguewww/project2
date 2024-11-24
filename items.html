@@ -1,0 +1,86 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shaman Drum Interface</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Stalinist+One&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="previous-step" onclick="goBackPage()">
+            <h2>Previous step</h2>
+        </div>
+        
+        <div class="main-content">
+            <div class="left-panel">
+                <div class="backpack">
+                    <h3>Backpack</h3>
+                    <div class="props">
+                        <h4>Props</h4>
+                        <div class="props-line"></div>
+                        <div class="props-grid">
+                            <div class="prop-item" data-item-id="sun-drum">
+                                <img src="items/drum.png" alt="Sun Drum">
+                            </div>
+                            <div class="prop-item" data-item-id="whip">
+                                <img src="items/whip.png" alt="whip">
+                            </div>
+                            <div class="prop-item" data-item-id="mask">
+                                <img src="items/mask.png" alt="mask">
+                            </div>
+                            <div class="prop-item" data-item-id="fire">
+                                <img src="items/fire.png" alt="fire">
+                            </div>
+                            <div class="prop-item" data-item-id="bones">
+                                <img src="items/bones.png" alt="bones">
+                            </div>
+                            <div class="prop-item" data-item-id="bucket">
+                                <img src="items/bucket.png" alt="bucket">
+                            </div>
+                            <div class="prop-item" data-item-id="turtle">
+                                <img src="items/turtle.png" alt="turtle">
+                            </div>
+                            <div class="prop-item" data-item-id="sticks">
+                                <img src="items/sticks.png" alt="sticks">
+                            </div>
+
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="divination-results">
+                    <h3>Today's divination results</h3>
+                    <div class="props-line"></div>
+                    <div class="results-grid">
+                        <div class="result-item"><img src="items/result0.png" alt="Scroll"></div>
+                        <div class="result-item"><img src="items/result1.png" alt="Scroll"></div>
+                        <div class="result-item"><img src="items/result2.png" alt="Scroll"></div>
+                        <div class="result-item"><img src="items/result3.png" alt="Scroll"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="right-panel">
+                <div class="item-details">
+                    <h2>Shaman Drum</h2>
+                    <h3>(Wenwang Drum)</h3>
+                    <p class="function">Function: The shamanic drum is the most important ritual tool, used to summon gods, drive away evil spirits, and enter a mystical state.</p>
+                    <p class="appearance">Appearance: Usually a single-sided or double-sided round drum, made of wooden frame and animal skin. The drum may have sacred patterns painted on it.</p>
+                </div>
+                <div class="drum-display">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="items.js"></script>
+</body>
+</html>
