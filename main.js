@@ -45,9 +45,6 @@ const buttons = [
 init();
 animate();
 
-const backPack=document.getElementById("backPack");
-backPack.addEventListener("click", goToBackpack);
-
 function goToBackpack() {
   alert("sidmji");
   window.location.href = "items.html";

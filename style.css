@@ -81,6 +81,7 @@ video {
   -webkit-backdrop-filter: blur(3px);  */
   z-index: 1; /* 确保覆盖在所有内容之上 */
   opacity: 0;
+  pointer-events: none;
 }
 
 #videoPlayer {
