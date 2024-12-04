@@ -13,11 +13,7 @@ import { closeView } from "./closeView.js";
 import { middleView } from "./middleView.js";
 import { distantView } from "./distantView.js";
 import { setActiveView } from "./state.js";
-import { globalState } from './global.js';
 
-console.log("File1.js: Initial value:", globalState.sharedVariable);
-globalState.sharedVariable = 100; // 修改值
-console.log("File1.js: Updated value:", globalState.sharedVariable);
 
 let scene, camera, renderer, composer, model, controls, raycaster, mouse;
 const objects = [];
@@ -45,8 +41,7 @@ const buttons = [
 init();
 animate();
 
-function goToBackpack() {
-  alert("sidmji");
+window.goToBackpack = function() {
   window.location.href = "items.html";
 }
 

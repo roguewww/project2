@@ -2,23 +2,22 @@ import * as THREE from "three";
 import { gsap } from "gsap";
 import { activeView } from "./state.js";
 import { removeMiddleViewMouseMoveListener } from "./middleView.js";
+import { globalState } from './global.js';
 
-// Global variables for random values of each clickable object
-export const objectStates = {
-    "Sphere002_Baked": null,
-    "xiadele_Line2029219858008_Baked": null,
-    "立方体011_Baked": null,
-    "gui-jia_Baked": null,
-    "000_0_0_Baked5": null,
+// 定义每个对象对应的键值映射
+const objectKeys = {
+    "Sphere002_Baked": "var1",
+    "xiadele_Line2029219858008_Baked": "var2",
+    "立方体011_Baked": "var3",
+    "gui-jia_Baked": "var4",
 };
 
 // Map object names to their corresponding video sources
 const objectVideos = {
     "Sphere002_Baked": "bones.webm",
-    "xiadele_Line2029219858008_Baked": "bones.webm",
-    "立方体011_Baked": "bones.webm",
-    "gui-jia_Baked": "bones.webm",
-    "000_0_0_Baked": "bones.webm",
+    "xiadele_Line2029219858008_Baked": "bamboo.mp4",
+    "立方体011_Baked": "jj.webm",
+    "gui-jia_Baked": "turtle.mp4",
 };
 
 export function closeView(camera, objects) {
@@ -62,50 +61,59 @@ export function closeView(camera, objects) {
         if (intersects.length > 0) {
             const intersectedObject = intersects[0].object;
 
-            if (objectVideos[intersectedObject.name]) { // Check if the object has a corresponding video
+            if (objectVideos[intersectedObject.name] && objectKeys.hasOwnProperty(intersectedObject.name)) {
                 const randomValue = Math.round(Math.random());
-                objectStates[intersectedObject.name] = randomValue;
+                const key = objectKeys[intersectedObject.name];
 
-                // Play the associated video for the clicked object
-                playVideo(objectVideos[intersectedObject.name], intersectedObject.name);
+                // 更新 globalState 对象的值
+                globalState[key] = randomValue;
+
+                console.log(`Updated globalState.${key} to: ${randomValue}`);
+                
+                // 播放点击对象的相关视频
+                playVideo(objectVideos[intersectedObject.name], intersectedObject.name, key);
             }
         }
     }
 
-    function playVideo(src, objectName) {
+    function playVideo(src, objectName, key) {
         const videoContainer = document.getElementById("videoContainer");
         const videoPlayer = document.getElementById("videoPlayer");
         const closeButton = document.getElementById("closeButton");
-    
+
         videoPlayer.src = src;
         videoContainer.style.display = "flex";
-        
-        // Clear any previous onended handler
+
+        // 清除之前的 onended 事件
         videoPlayer.onended = null;
-    
-        // Set a new onended handler for the current video
+
+        // 设置当前视频结束时的处理
         videoPlayer.onended = () => {
-            showImage(objectName); // Show image only when the video ends
+            showImage(objectName, key);
         };
-    
+
         closeButton.onclick = () => {
             videoPlayer.pause();
             videoContainer.style.display = "none";
             const imageContainer = document.getElementById("imageContainer");
-            imageContainer.style.display = "none"; // Hide the image if close button is clicked
+            imageContainer.style.display = "none"; // 如果点击了关闭按钮，则隐藏图片
         };
     }
-    
-    function showImage(objectName) {
+
+    function showImage(objectName, key) {
         const imageContainer = document.getElementById("imageContainer");
         const imageElement = document.getElementById("displayImage");
-        const imageSrc = objectStates[objectName] === 0 ? "good.jpg" : "bad.jpg";
+
+        // 根据 globalState 对象的值设置图片路径
+        const stateValue = globalState[key];
+        const imageSrc = stateValue === 0 ? "good.png" : "bad.png";
         imageElement.src = imageSrc;
-    
-        // Display the image container with a fade-in effect
+
+        // 显示图片容器并添加淡入效果
         imageContainer.style.display = "flex";
         imageElement.style.opacity = 0;
         gsap.to(imageElement, { opacity: 1, duration: 1 });
-    
+
+        console.log(`Showing image: ${imageSrc} for ${objectName} with state ${stateValue}`);
     }
 }

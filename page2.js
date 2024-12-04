@@ -14,6 +14,6 @@ const messages = [
     }
   });
   
-  function goToNextPage() {
-    window.location.href = "items.html";
+  window.goToNextPage = function() {
+    window.location.href = "index.html";
   }

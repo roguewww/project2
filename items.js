@@ -1,19 +1,35 @@
-// 修改 script.js
-
-import { objectStates } from '/closeView.js';
 import { globalState } from './global.js';
 
-console.log("File1.js: Initial value:", globalState.sharedVariable);
-globalState.sharedVariable = 120; // 修改值
-console.log("File1.js: Updated value:", globalState.sharedVariable);
+document.addEventListener('DOMContentLoaded', function () {
+    const container = document.querySelector('.container');
+    const propItems = document.querySelectorAll('.prop-item');
+    const resultItems = document.querySelectorAll('.result-item'); // 获取所有 result-item
+    const itemDetailsDiv = document.querySelector('.item-details'); // 显示道具详情的区域
+    const messageDiv = document.createElement('div'); // 创建消息显示区域
+    messageDiv.classList.add('message'); // 添加类名以便样式调整
+    document.body.appendChild(messageDiv); // 将消息区域添加到页面中
+    console.log(globalState);
+    const DEFAULT_BACKGROUND = 'items/default.png'; // 默认背景图片
 
-// Now you can use objectStates in this file
-console.log(objectStates);
+    const gridImages = {
+        var1: {
+            0: 'items/good1.png',
+            1: 'items/bad1.png',
+        },
+        var2: {
+            0: 'items/good2.png',
+            1: 'items/bad2.png',
+        },
+        var3: {
+            0: 'items/good3.png',
+            1: 'items/bad3.png',
+        },
+        var4: {
+            0: 'items/good4.png',
+            1: 'items/bad4.png',
+        },
+    };
 
-
-document.addEventListener('DOMContentLoaded', function() {
-    const DEFAULT_BACKGROUND = 'path/to/default-background.jpg';
-    
     const itemDetails = {
         'sun-drum': {
             title: 'Shaman Drum',
@@ -71,54 +87,98 @@ document.addEventListener('DOMContentLoaded', function() {
             appearance: '',
             backgroundImage: 'items/sticksBg.jpg'
         }
-
     };
 
-    const container = document.querySelector('.container');
-    const propItems = document.querySelectorAll('.prop-item');
-    const itemDetailsDiv = document.querySelector('.item-details');
-
-    // 设置默认状态
-    function setDefaultState() {
-        container.style.backgroundImage = `url(${'items/default.png'})`;
+    // 设置默认背景
+    function setDefaultBackground() {
+        container.style.backgroundImage = `url(${DEFAULT_BACKGROUND})`;
         itemDetailsDiv.innerHTML = ''; // 清空详情
+        messageDiv.textContent = ''; // 清空提示信息
     }
 
-    // 初始化时设置默认状态
-    setDefaultState();
+    // 根据 globalState 和 modelKey 更新背景
+    function updateContainerBackground(modelKey) {
+        const stateValue = globalState[modelKey]; // 获取 globalState 的当前值
+        const imageSrc = stateValue !== null ? gridImages[modelKey][stateValue] : null;
 
+        // 清空提示文字
+        messageDiv.textContent = '';
+
+        if (stateValue === null) {
+            // 如果 globalState 值为 null，显示提示信息
+            container.style.backgroundImage = `url(${DEFAULT_BACKGROUND})`;
+            messageDiv.textContent = 'Please go divination first, then your result will show here';
+            console.log('Set to default background with message');
+        } else if (imageSrc) {
+            // 如果有对应的图片，更新背景
+            container.style.backgroundImage = `url(${imageSrc})`;
+            console.log(`Updated background to: ${imageSrc}`);
+        }
+    }
+
+    // 显示道具详情
+    function showItemDetails(itemId) {
+        const details = itemDetails[itemId];
+        if (details) {
+            itemDetailsDiv.innerHTML = `
+                <h2>${details.title}</h2>
+                ${details.subtitle ? `<h3>${details.subtitle}</h3>` : ''}
+                ${details.function ? `<p class="function">${details.function}</p>` : ''}
+                ${details.appearance ? `<p class="appearance">${details.appearance}</p>` : ''}
+            `;
+        } else {
+            itemDetailsDiv.innerHTML = ''; // 清空详情
+        }
+    }
+
+    // 初始化默认背景
+    setDefaultBackground();
+
+    // 监听 prop-item 点击事件
     propItems.forEach(item => {
-        item.addEventListener('click', function(e) {
-            // 移除其他道具的选中状态
-            propItems.forEach(i => {
-                if (i !== this) {
-                    i.classList.remove('selected');
-                }
-            });
-
-            // 切换当前道具的选中状态
-            this.classList.toggle('selected');
-            
-            // 获取道具ID
+        item.addEventListener('click', function () {
             const itemId = this.dataset.itemId;
+
+            // 清空提示文字
+            messageDiv.textContent = '';
+
+            // 显示道具详情
+            showItemDetails(itemId);
+
+            // 切换选中状态
+            propItems.forEach(i => i.classList.remove('selected'));
+            this.classList.add('selected');
+
+            // 更新背景为道具的背景图片
             const details = itemDetails[itemId];
-
-            if (details) {
-                // 无论是否已选中，都显示该道具的详情
+            if (details && details.backgroundImage) {
                 container.style.backgroundImage = `url(${details.backgroundImage})`;
+            } else {
+                setDefaultBackground(); // 如果没有背景图片，设置默认背景
+            }
+        });
+    });
 
-                itemDetailsDiv.innerHTML = `
-                    <h2>${details.title}</h2>
-                    ${details.subtitle ? `<h3>${details.subtitle}</h3>` : ''}
-                    ${details.function ? `<p class="function">${details.function}</p>` : ''}
-                    ${details.appearance ? `<p class="appearance">${details.appearance}</p>` : ''}
-                `;
+    // 监听 result-item 点击事件
+    resultItems.forEach((item, index) => {
+        item.addEventListener('click', function () {
+            const modelKey = `var${index + 1}`; // 假设 result-item 对应 var1, var2, ...
+
+            // 清空提示文字
+            messageDiv.textContent = '';
+
+            if (globalState[modelKey] !== undefined) {
+                updateContainerBackground(modelKey); // 更新背景图片或显示消息
+
+                // 清空道具详情
+                itemDetailsDiv.innerHTML = '';
+            } else {
+                console.log(`No state defined for ${modelKey}`);
             }
         });
     });
 });
 
-
-function goBackPage() {
+window.goBackPage = function() {
     window.location.href = "index.html";
   }
